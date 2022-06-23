@@ -1,0 +1,16 @@
+{
+  "name": "cassis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Douglas",
+  "license": "ISC",
+  "dependencies": {
+    "cassandra-driver": "^4.6.3",
+    "express": "^4.18.1",
+    "express-cassandra": "^2.8.0"
+  }
+}
