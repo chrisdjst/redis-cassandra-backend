@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsuarioRepository } from './usuario.repository';
-import { Usuario } from './usuario.model';
+import { Usuario } from './entities/usuario.entity';
 import { CassandraService } from 'src/common/cassandra/cassandra.service';
 
 @Injectable()
@@ -21,5 +21,9 @@ export class UsuarioService {
 
   async updateUsuarioName(id: number, name: string) {
     return this.usuarioRepository.updateUsuarioName(id, name);
+  }
+
+  async getUsuarioByLogin(login: string) {
+    return this.usuarioRepository.getUsuarioByLogin(login);
   }
 }

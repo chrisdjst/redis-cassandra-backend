@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { mapping } from 'cassandra-driver';
-import { Usuario } from './usuario.model';
+import { Usuario } from './entities/usuario.entity';
 import * as bcrypt from 'bcrypt';
 import { CassandraService } from 'src/common/cassandra/cassandra.service';
 import { CreateUsuarioDTO } from './dto/create-usuario.dto';
@@ -54,7 +54,7 @@ export class UsuarioRepository implements OnModuleInit {
     ).toArray();
   }
 
-  async find(login: string) {
-    return (await this.usuarioMapper.find({ login: login })).toArray();
+  async getUsuarioByLogin(login: string) {
+    return (await this.usuarioMapper.find([ login = login ])).toArray();
   }
 }

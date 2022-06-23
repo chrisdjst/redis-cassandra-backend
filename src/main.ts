@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 //import { EmployeeModule } from './employee/employee.module';
 import { ValidationPipe } from '@nestjs/common';
-import { UsuarioModule } from './usuario/usuario.module';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(UsuarioModule);
+  const app = await NestFactory.create(AppModule);
 
   // Pipes
   app.useGlobalPipes(

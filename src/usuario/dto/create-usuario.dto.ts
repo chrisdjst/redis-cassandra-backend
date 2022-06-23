@@ -1,4 +1,4 @@
-import { Usuario } from '../usuario.model';
+import { Usuario } from '../entities/usuario.entity';
 import {
   IsEmail,
   IsInt,
