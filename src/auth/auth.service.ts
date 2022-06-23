@@ -28,20 +28,19 @@ export class AuthService {
 
   async validateUser(login: string, senha: string): Promise<Usuario[]> {
     const usuario = await this.usuarioService.getUsuarioByLogin(login);
-    return usuario;
-    //if (usuario) {
+    //return usuario;
+    if (usuario) {
       //const isPasswordValid = await bcrypt.compare(senha, usuario.senha);
 
-      //if (isPasswordValid) {
-        //return {
-          //...usuario,
-          //password: undefined,
-        //};
-      //}
-    //}
+      if (senha == usuario[senha]) {
+        return {
+          ...usuario,
+        };
+      }
+    }
 
-    //throw new UnauthorizedError(
-      //'Email address or password provided is incorrect.',
-    //);
+    throw new UnauthorizedError(
+      'Email address or password provided is incorrect.',
+    );
   }
 }
