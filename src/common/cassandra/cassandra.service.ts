@@ -7,7 +7,7 @@ export class CassandraService {
   mapper: mapping.Mapper;
   private createClient() {
     this.client = new Client({
-      keyspace: 'employeedb',
+      keyspace: 'cassis',
       cloud: {
         secureConnectBundle: 'secure-connect-cassis.zip',
       },

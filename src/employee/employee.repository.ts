@@ -27,4 +27,23 @@ export class EmployeeRepository implements OnModuleInit {
   async getEmployees() {
     return (await this.employeeMapper.findAll()).toArray();
   }
+  async getEmployeeById(id: number) {
+    return (await this.employeeMapper.find({ empId: id })).toArray();
+  }
+
+  async createEmployee(employee: Employee) {
+    return (await this.employeeMapper.insert(employee)).toArray();
+  }
+
+  async updateEmployeeName(id: number, name: string) {
+    const employee = new Employee();
+    employee.empId = id;
+    employee.firstName = name;
+    return (
+      await this.employeeMapper.update(employee, {
+        fields: ['empId', 'firstName'],
+        ifExists: true,
+      })
+    ).toArray();
+  }
 }
