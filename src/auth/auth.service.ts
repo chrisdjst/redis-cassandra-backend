@@ -16,7 +16,6 @@ export class AuthService {
 
   async login(usuario: Usuario): Promise<UserToken> {
     const payload: UserPayload = {
-      sub: usuario.cod_usuario,
       email: usuario.email,
       name: usuario.nome,
     };
@@ -28,11 +27,8 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<Usuario[]> {
     const usuario = await this.usuarioService.getUsuarioByEmail(email);
-    //return usuario;
     if (usuario) {
-      //const isPasswordValid = await bcrypt.compare(senha, usuario.senha);
-
-      if (password == usuario['senha']) {
+      if (password == usuario[0]['senha']) {
         return {
           ...usuario,
         };

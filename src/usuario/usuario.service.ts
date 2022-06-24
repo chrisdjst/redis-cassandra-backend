@@ -11,16 +11,12 @@ export class UsuarioService {
     return this.usuarioRepository.getUsuarios();
   }
 
-  async getUsuarioById(id: number) {
-    return this.usuarioRepository.getUsuarioById(id);
-  }
-
   async createUsuario(usuario: Usuario) {
     return this.usuarioRepository.createUsuario(usuario);
   }
 
-  async updateUsuarioName(id: number, name: string) {
-    return this.usuarioRepository.updateUsuarioName(id, name);
+  async updateUsuarioName(email: string, name: string) {
+    return this.usuarioRepository.updateUsuarioName(email, name);
   }
 
   async getUsuarioByEmail(email: string) {

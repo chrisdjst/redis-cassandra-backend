@@ -8,23 +8,22 @@ import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 export class UsuarioController {
   constructor(private usuarioService: UsuarioService) {}
 
-  @IsPublic()
   @Get('usuarios')
   async getUsuarios() {
     return this.usuarioService.getUsuarios();
   }
 
-  @Get('usuarios/:id')
-  async getUsuarioById(@Param('id') id: number) {
-    return this.usuarioService.getUsuarioById(id);
+  @Get('usuarios/:email')
+  async getUsuarioByEmail(@Param('email') email: string) {
+    return this.usuarioService.getUsuarioByEmail(email);
   }
 
-  @Put('usuarios/:id')
-  async updateUsuarioById(
-    @Param('id') id: number,
+  @Put('usuarios/:email')
+  async updateUsuarioByEmail(
+    @Param('email') email: string,
     @Body() usuario: UpdateUsuarioDTO,
   ) {
-    return this.usuarioService.updateUsuarioName(id, usuario.Nome);
+    return this.usuarioService.updateUsuarioName(email, usuario.Nome);
   }
 
   @IsPublic()

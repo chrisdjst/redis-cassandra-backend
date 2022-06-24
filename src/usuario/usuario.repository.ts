@@ -29,9 +29,6 @@ export class UsuarioRepository implements OnModuleInit {
   async getUsuarios() {
     return (await this.usuarioMapper.findAll()).toArray();
   }
-  async getUsuarioById(id: number) {
-    return (await this.usuarioMapper.find({ cod_usuario: id })).toArray();
-  }
 
   async createUsuario(usuario: Usuario) {
     return (await this.usuarioMapper.insert(usuario)).toArray();
@@ -41,20 +38,20 @@ export class UsuarioRepository implements OnModuleInit {
     //return (await this.usuarioMapper.insert(usuario)).toArray();
   }
 
-  async updateUsuarioName(id: number, name: string) {
+  async updateUsuarioName(email: string, name: string) {
     const usuario = new Usuario();
-    usuario.cod_usuario = id;
+    usuario.email = email;
     usuario.nome = name;
 
     return (
       await this.usuarioMapper.update(usuario, {
-        fields: ['cod_usuario', 'nome'],
+        fields: ['email', 'nome'],
         ifExists: true,
       })
     ).toArray();
   }
 
   async getUsuarioByEmail(email: string) {
-    return (await this.usuarioMapper.find([(email = email)])).toArray();
+    return (await this.usuarioMapper.find({ email: email })).toArray();
   }
 }
