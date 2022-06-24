@@ -26,13 +26,13 @@ export class AuthService {
     };
   }
 
-  async validateUser(login: string, senha: string): Promise<Usuario[]> {
-    const usuario = await this.usuarioService.getUsuarioByLogin(login);
+  async validateUser(email: string, password: string): Promise<Usuario[]> {
+    const usuario = await this.usuarioService.getUsuarioByEmail(email);
     //return usuario;
     if (usuario) {
       //const isPasswordValid = await bcrypt.compare(senha, usuario.senha);
 
-      if (senha == usuario[senha]) {
+      if (password == usuario['senha']) {
         return {
           ...usuario,
         };

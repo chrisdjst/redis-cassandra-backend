@@ -23,7 +23,7 @@ export class UsuarioService {
     return this.usuarioRepository.updateUsuarioName(id, name);
   }
 
-  async getUsuarioByLogin(login: string) {
-    return this.usuarioRepository.getUsuarioByLogin(login);
+  async getUsuarioByEmail(email: string) {
+    return this.usuarioRepository.getUsuarioByEmail(email);
   }
 }

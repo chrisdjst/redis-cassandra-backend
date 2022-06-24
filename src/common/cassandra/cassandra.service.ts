@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Client, mapping, auth } from 'cassandra-driver';
+import { Client, mapping } from 'cassandra-driver';
 
 @Injectable()
 export class CassandraService {

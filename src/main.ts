@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-//import { EmployeeModule } from './employee/employee.module';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 

@@ -2,11 +2,13 @@ import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDTO } from './dto/create-usuario.dto';
 import { UpdateUsuarioDTO } from './dto/update-usuario.dto';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 
 @Controller()
 export class UsuarioController {
   constructor(private usuarioService: UsuarioService) {}
 
+  @IsPublic()
   @Get('usuarios')
   async getUsuarios() {
     return this.usuarioService.getUsuarios();
@@ -25,6 +27,7 @@ export class UsuarioController {
     return this.usuarioService.updateUsuarioName(id, usuario.Nome);
   }
 
+  @IsPublic()
   @Post('usuarios')
   async createUsuario(@Body() usuario: CreateUsuarioDTO) {
     return this.usuarioService.createUsuario(usuario);
