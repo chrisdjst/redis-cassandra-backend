@@ -15,8 +15,8 @@ export class UsuarioService {
     return this.usuarioRepository.createUsuario(usuario);
   }
 
-  async updateUsuarioName(email: string, name: string) {
-    return this.usuarioRepository.updateUsuarioName(email, name);
+  async updateUsuarioName(email: string, usuario: Usuario) {
+    return this.usuarioRepository.updateUsuarioName(email, usuario);
   }
 
   async getUsuarioByEmail(email: string) {

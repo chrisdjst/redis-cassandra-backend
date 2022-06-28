@@ -1,9 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { mapping } from 'cassandra-driver';
 import { Usuario } from './entities/usuario.entity';
-//import * as bcrypt from 'bcrypt';
 import { CassandraService } from 'src/common/cassandra/cassandra.service';
-//import { CreateUsuarioDTO } from './dto/create-usuario.dto';
 
 @Injectable()
 export class UsuarioRepository implements OnModuleInit {
@@ -32,20 +30,14 @@ export class UsuarioRepository implements OnModuleInit {
 
   async createUsuario(usuario: Usuario) {
     return (await this.usuarioMapper.insert(usuario)).toArray();
-
-    //async createUsuario(usuario: Usuario): Promise<Usuario> {
-    //usuario.senha = await bcrypt.hash(usuario.senha, 10);
-    //return (await this.usuarioMapper.insert(usuario)).toArray();
   }
 
-  async updateUsuarioName(email: string, name: string) {
-    const usuario = new Usuario();
+  async updateUsuarioName(email: string, usuario: Usuario) {
     usuario.email = email;
-    usuario.nome = name;
 
     return (
       await this.usuarioMapper.update(usuario, {
-        fields: ['email', 'nome'],
+        fields: ['email', 'nome', 'senha'],
         ifExists: true,
       })
     ).toArray();

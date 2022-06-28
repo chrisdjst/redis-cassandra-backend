@@ -23,7 +23,7 @@ export class UsuarioController {
     @Param('email') email: string,
     @Body() usuario: UpdateUsuarioDTO,
   ) {
-    return this.usuarioService.updateUsuarioName(email, usuario.Nome);
+    return this.usuarioService.updateUsuarioName(email, usuario);
   }
 
   @IsPublic()
