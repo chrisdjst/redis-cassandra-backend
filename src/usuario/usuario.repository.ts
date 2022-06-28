@@ -2,10 +2,11 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { mapping } from 'cassandra-driver';
 import { Usuario } from './entities/usuario.entity';
 import { CassandraService } from 'src/common/cassandra/cassandra.service';
+import { RedisService } from 'src/common/redis/redis.service';
 
 @Injectable()
 export class UsuarioRepository implements OnModuleInit {
-  constructor(private cassandraService: CassandraService) {}
+  constructor(private cassandraService: CassandraService, private redisService: RedisService) {}
 
   usuarioMapper: mapping.ModelMapper<Usuario>;
 
@@ -44,6 +45,9 @@ export class UsuarioRepository implements OnModuleInit {
   }
 
   async getUsuarioByEmail(email: string) {
+    const clientRedis = await this.redisService.createRedis()
+    const doug = await clientRedis.json.get('Douglas@gmail.com')
+    return doug
     return (await this.usuarioMapper.find({ email: email })).toArray();
   }
 }

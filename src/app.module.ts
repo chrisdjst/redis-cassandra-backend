@@ -6,10 +6,10 @@ import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { CassandraModule } from './common/cassandra/cassandra.module';
 import { UsuarioModule } from './usuario/usuario.module';
-import { redisModule } from './common/redis/redis.module';
+import { RedisModule } from './common/redis/redis.module';
 
 @Module({
-  imports: [CassandraModule, UsuarioModule, AuthModule, redisModule],
+  imports: [CassandraModule, UsuarioModule, AuthModule, RedisModule],
   controllers: [AppController],
   providers: [
     AppService,

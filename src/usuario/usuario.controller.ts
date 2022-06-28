@@ -7,12 +7,12 @@ import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 @Controller()
 export class UsuarioController {
   constructor(private usuarioService: UsuarioService) {}
-
+  @IsPublic()
   @Get('usuarios')
   async getUsuarios() {
     return this.usuarioService.getUsuarios();
   }
-
+  @IsPublic()
   @Get('usuarios/:email')
   async getUsuarioByEmail(@Param('email') email: string) {
     return this.usuarioService.getUsuarioByEmail(email);
