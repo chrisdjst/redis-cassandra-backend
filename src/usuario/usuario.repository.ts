@@ -45,9 +45,12 @@ export class UsuarioRepository implements OnModuleInit {
   }
 
   async getUsuarioByEmail(email: string) {
-    const clientRedis = await this.redisService.createRedis()
-    const doug = await clientRedis.json.get('Douglas@gmail.com')
-    return doug
     return (await this.usuarioMapper.find({ email: email })).toArray();
+  }
+
+  async getUserByRedis(email: string) {
+    const clientRedis = await this.redisService.createRedis()
+    const usuario = await clientRedis.json.get(email)
+    return usuario
   }
 }

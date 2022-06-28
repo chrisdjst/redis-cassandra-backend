@@ -22,4 +22,8 @@ export class UsuarioService {
   async getUsuarioByEmail(email: string) {
     return this.usuarioRepository.getUsuarioByEmail(email);
   }
+
+  async getUserByRedis(email: string) {
+    return this.usuarioRepository.getUserByRedis(email);
+  }
 }

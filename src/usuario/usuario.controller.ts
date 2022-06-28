@@ -7,12 +7,12 @@ import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 @Controller()
 export class UsuarioController {
   constructor(private usuarioService: UsuarioService) {}
-  @IsPublic()
+  //@IsPublic()
   @Get('usuarios')
   async getUsuarios() {
     return this.usuarioService.getUsuarios();
   }
-  @IsPublic()
+  
   @Get('usuarios/:email')
   async getUsuarioByEmail(@Param('email') email: string) {
     return this.usuarioService.getUsuarioByEmail(email);
@@ -26,9 +26,14 @@ export class UsuarioController {
     return this.usuarioService.updateUsuarioName(email, usuario);
   }
 
-  @IsPublic()
   @Post('usuarios')
   async createUsuario(@Body() usuario: CreateUsuarioDTO) {
     return this.usuarioService.createUsuario(usuario);
+  }
+
+  @IsPublic()
+  @Get('redis/:email')
+  async getUserByRedis(@Param('email') email: string){
+    return this.usuarioService.getUserByRedis(email)
   }
 }
