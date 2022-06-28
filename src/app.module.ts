@@ -7,9 +7,16 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { CassandraModule } from './common/cassandra/cassandra.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { RedisModule } from './common/redis/redis.module';
+import { RegistroAulaModule } from './registro_aula/registro_aula.module';
 
 @Module({
-  imports: [CassandraModule, UsuarioModule, AuthModule, RedisModule],
+  imports: [
+    CassandraModule,
+    UsuarioModule,
+    RegistroAulaModule,
+    AuthModule,
+    RedisModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,

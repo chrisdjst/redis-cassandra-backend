@@ -12,7 +12,7 @@ export class UsuarioController {
   async getUsuarios() {
     return this.usuarioService.getUsuarios();
   }
-  
+
   @Get('usuarios/:email')
   async getUsuarioByEmail(@Param('email') email: string) {
     return this.usuarioService.getUsuarioByEmail(email);
@@ -26,14 +26,15 @@ export class UsuarioController {
     return this.usuarioService.updateUsuarioName(email, usuario);
   }
 
-  @Post('usuarios')
+  @IsPublic()
+  @Post('registro')
   async createUsuario(@Body() usuario: CreateUsuarioDTO) {
     return this.usuarioService.createUsuario(usuario);
   }
 
   @IsPublic()
   @Get('redis/:email')
-  async getUserByRedis(@Param('email') email: string){
-    return this.usuarioService.getUserByRedis(email)
+  async getUserByRedis(@Param('email') email: string) {
+    return this.usuarioService.getUserByRedis(email);
   }
 }
