@@ -9,7 +9,6 @@ export class UsuarioRepository implements OnModuleInit {
   constructor(private cassandraService: CassandraService, private redisService: RedisService) {}
 
   usuarioMapper: mapping.ModelMapper<Usuario>;
-
   onModuleInit() {
     const mappingOptions: mapping.MappingOptions = {
       models: {
@@ -30,6 +29,8 @@ export class UsuarioRepository implements OnModuleInit {
   }
 
   async createUsuario(usuario: Usuario) {
+    const clientRedis = await this.redisService.createRedis()
+    await clientRedis.json.set(usuario.email, '$', usuario)
     return (await this.usuarioMapper.insert(usuario)).toArray();
   }
 
