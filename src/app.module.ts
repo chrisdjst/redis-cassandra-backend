@@ -8,6 +8,9 @@ import { CassandraModule } from './common/cassandra/cassandra.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { RedisModule } from './common/redis/redis.module';
 import { RegistroAulaModule } from './registro_aula/registro_aula.module';
+import { CursoModule } from './curso/curso.module';
+import { MatriculaModule } from './matricula/matricula.module';
+import { TurmaModule } from './turma/turma.module';
 
 @Module({
   imports: [
@@ -16,6 +19,10 @@ import { RegistroAulaModule } from './registro_aula/registro_aula.module';
     RegistroAulaModule,
     AuthModule,
     RedisModule,
+    CursoModule,
+    MatriculaModule,
+    TurmaModule,
+    RegistroAulaModule,
   ],
   controllers: [AppController],
   providers: [
