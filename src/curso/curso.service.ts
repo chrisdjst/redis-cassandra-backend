@@ -11,12 +11,12 @@ export class CursoService {
     return this.cursoRepository.getCurso();
   }
 
-  async createCurso(aula: Curso) {
-    return this.cursoRepository.createCurso(aula);
+  async createCurso(curso: Curso) {
+    return this.cursoRepository.createCurso(curso);
   }
 
-  async updateCursoCodCurso(cod_curso: string, aula: Curso) {
-    return this.cursoRepository.updateCursoCodCurso(cod_curso, aula);
+  async updateCurso(cod_curso: string, curso: Curso) {
+    return this.cursoRepository.updateCurso(cod_curso, curso);
   }
 
   async getCursoByCodCurso(cod_curso: string) {
