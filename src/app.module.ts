@@ -11,6 +11,7 @@ import { RegistroAulaModule } from './registro_aula/registro_aula.module';
 import { CursoModule } from './curso/curso.module';
 import { MatriculaModule } from './matricula/matricula.module';
 import { TurmaModule } from './turma/turma.module';
+import { MateriaModule } from './materia/materia.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TurmaModule } from './turma/turma.module';
     MatriculaModule,
     TurmaModule,
     RegistroAulaModule,
+    MateriaModule,
   ],
   controllers: [AppController],
   providers: [
