@@ -6,34 +6,34 @@ import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 
 @Controller()
 export class CursoController {
-  constructor(private aulaService: CursoService) {}
+  constructor(private cursoService: CursoService) {}
   //@IsPublic()
   @Get('curso')
-  async getAulas() {
-    return this.aulaService.getCurso();
+  async getCurso() {
+    return this.cursoService.getCurso();
   }
 
   @Get('curso/:cod_curso')
   async getCursoByCodCurso(@Param('cod_curso') cod_curso: string) {
-    return this.aulaService.getCursoByCodCurso(cod_curso);
+    return this.cursoService.getCursoByCodCurso(cod_curso);
   }
 
   @Put('curso/:cod_curso')
   async updateCursoByCodCurso(
     @Param('cod_curso') cod_curso: string,
-    @Body() aula: UpdateCursoDTO,
+    @Body() curso: UpdateCursoDTO,
   ) {
-    return this.aulaService.updateCurso(cod_curso, aula);
+    return this.cursoService.updateCurso(cod_curso, curso);
   }
 
   @Post('curso')
-  async createUsuario(@Body() aula: CreateCursoDTO) {
-    return this.aulaService.createCurso(aula);
+  async createUsuario(@Body() curso: CreateCursoDTO) {
+    return this.cursoService.createCurso(curso);
   }
 
   @IsPublic()
   @Get('redis/:cod_curso')
   async getCursoByRedis(@Param('cod_curso') cod_curso: string) {
-    return this.aulaService.getCursoByRedis(cod_curso);
+    return this.cursoService.getCursoByRedis(cod_curso);
   }
 }
