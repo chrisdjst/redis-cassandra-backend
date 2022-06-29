@@ -13,17 +13,17 @@ export class RegistroAulaController {
     return this.aulaService.getRegistroAula();
   }
 
-  @Get('aulas/:materia')
-  async getRegistroAulaByMateria(@Param('materia') materia: string) {
-    return this.aulaService.getRegistroAulaByMateria(materia);
+  @Get('aulas/:email')
+  async getRegistroAulaByEmail(@Param('email') email: string) {
+    return this.aulaService.getRegistroAulaByEmail(email);
   }
 
-  @Put('aulas/:materia')
-  async updateRegistroAulaByMateria(
-    @Param('materia') materia: string,
+  @Put('aulas/:email')
+  async updateRegistroAulaByEmail(
+    @Param('email') email: string,
     @Body() aula: UpdateRegistroAulaDTO,
   ) {
-    return this.aulaService.updateRegistroAulaMateria(materia, aula);
+    return this.aulaService.updateRegistroAulaEmail(email, aula);
   }
 
   @Post('aulas')
@@ -32,8 +32,8 @@ export class RegistroAulaController {
   }
 
   @IsPublic()
-  @Get('redis/:materia')
-  async getRegistroAulaByRedis(@Param('materia') materia: string) {
-    return this.aulaService.getRegistroAulaByRedis(materia);
+  @Get('redis/:email')
+  async getRegistroAulaByRedis(@Param('email') email: string) {
+    return this.aulaService.getRegistroAulaByRedis(email);
   }
 }
