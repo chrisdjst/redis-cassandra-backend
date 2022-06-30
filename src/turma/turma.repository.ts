@@ -40,6 +40,9 @@ export class TurmaRepository implements OnModuleInit {
   async updateTurmaCodTurma(cod_turma: string, turma: Turma) {
     turma.cod_turma = cod_turma;
 
+    const client = await this.redisService.createRedis();
+    await client.json.arrAppend('turma/' + cod_turma, '$', cod_turma);
+
     return (
       await this.turmaMapper.update(turma, {
         fields: ['cod_turma', 'dt_inicio', 'dt_fim'],

@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RegistroAulaRepository } from './registro_aula.repository';
 import { RegistroAula } from './entities/registro_aula.entity';
-import { CassandraService } from 'src/common/cassandra/cassandra.service';
 
 @Injectable()
 export class RegistroAulaService {

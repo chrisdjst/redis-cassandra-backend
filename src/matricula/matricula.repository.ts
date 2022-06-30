@@ -48,7 +48,9 @@ export class MatriculaRepository implements OnModuleInit {
   }
 
   async getMatriculaByNumMatricula(num_matricula: number) {
-    return (await this.matriculaMapper.find({ num_matricula: num_matricula })).toArray();
+    return (
+      await this.matriculaMapper.find({ num_matricula: num_matricula })
+    ).toArray();
   }
 
   async getMatriculaByRedis(num_matricula: number) {

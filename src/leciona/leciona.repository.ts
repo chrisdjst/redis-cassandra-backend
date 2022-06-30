@@ -33,11 +33,20 @@ export class LecionaRepository implements OnModuleInit {
   }
 
   async createLeciona(leciona: Leciona) {
+    const clientRedis = await this.redisService.createRedis();
+    await clientRedis.json.set(
+      'leciona/' + leciona.email + '/materia ' + leciona.materia,
+      '$',
+      leciona,
+    );
     return (await this.lecionaMapper.insert(leciona)).toArray();
   }
 
   async updateLeciona(email: string, leciona: Leciona) {
     leciona.email = email;
+
+    const client = await this.redisService.createRedis();
+    await client.json.arrAppend('leciona/' + email, '$', email);
 
     return (
       await this.lecionaMapper.update(leciona, {
