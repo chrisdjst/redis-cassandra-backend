@@ -17,7 +17,7 @@ export class LecionaRepository implements OnModuleInit {
     const mappingOptions: mapping.MappingOptions = {
       models: {
         Leciona: {
-          tables: ['Leciona'],
+          tables: ['leciona'],
           mappings: new mapping.UnderscoreCqlToCamelCaseMappings(),
         },
       },
@@ -47,7 +47,7 @@ export class LecionaRepository implements OnModuleInit {
     ).toArray();
   }
 
-  async getLecionaByNumLeciona(email: string) {
+  async getLecionaByEmail(email: string) {
     return (await this.lecionaMapper.find({ email: email })).toArray();
   }
 

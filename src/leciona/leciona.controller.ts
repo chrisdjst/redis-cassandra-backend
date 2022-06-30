@@ -14,12 +14,12 @@ export class LecionaController {
   }
 
   @Get('leciona/:email')
-  async getLecionaByNumLeciona(@Param('email') email: string) {
-    return this.lecionaService.getLecionaByNumLeciona(email);
+  async getLecionaByEmail(@Param('email') email: string) {
+    return this.lecionaService.getLecionaByEmail(email);
   }
 
   @Put('leciona/:email')
-  async updateLecionaByNumLeciona(
+  async updateLecionaByEmail(
     @Param('email') email: string,
     @Body() leciona: UpdateLecionaDTO,
   ) {
@@ -27,7 +27,7 @@ export class LecionaController {
   }
 
   @Post('leciona')
-  async createUsuario(@Body() leciona: CreateLecionaDTO) {
+  async createLeciona(@Body() leciona: CreateLecionaDTO) {
     return this.lecionaService.createLeciona(leciona);
   }
 
