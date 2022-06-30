@@ -37,6 +37,9 @@ export class UsuarioRepository implements OnModuleInit {
   async updateUsuarioName(email: string, usuario: Usuario) {
     usuario.email = email;
 
+    const client = await this.redisService.createRedis()
+    await client.json.arrAppend(email, '$', usuario)
+
     return (
       await this.usuarioMapper.update(usuario, {
         fields: ['email', 'nome', 'senha'],
