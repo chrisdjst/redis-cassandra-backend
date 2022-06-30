@@ -36,24 +36,24 @@ export class RegistroAulaRepository implements OnModuleInit {
     return (await this.aulaMapper.insert(aula)).toArray();
   }
 
-  async updateRegistroAulaEmail(email: string, aula: RegistroAula) {
-    aula.email = email;
+  async updateRegistroAulaMateria(materia: string, aula: RegistroAula) {
+    aula.materia = materia;
 
     return (
       await this.aulaMapper.update(aula, {
-        fields: ['email', 'turma', 'curso'],
+        fields: ['materia', 'turma', 'curso'],
         ifExists: true,
       })
     ).toArray();
   }
 
-  async getRegistroAulaByEmail(email: string) {
-    return (await this.aulaMapper.find({ email: email })).toArray();
+  async getRegistroAulaByMateria(materia: string) {
+    return (await this.aulaMapper.find({ materia: materia })).toArray();
   }
 
-  async getRegistroAulaByRedis(email: string) {
+  async getRegistroAulaByRedis(materia: string) {
     const clientRedis = await this.redisService.createRedis();
-    const usuario = await clientRedis.json.get(email);
+    const usuario = await clientRedis.json.get(materia);
     return usuario;
   }
 }
