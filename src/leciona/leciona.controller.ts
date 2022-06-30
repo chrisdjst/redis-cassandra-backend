@@ -32,7 +32,7 @@ export class LecionaController {
   }
 
   @IsPublic()
-  @Get('redis/:email')
+  @Get('redisLeciona/:email')
   async getLecionaByRedis(@Param('email') email: string) {
     return this.lecionaService.getLecionaByRedis(email);
   }
