@@ -15,15 +15,15 @@ export class RegistroAulaService {
     return this.aulaRepository.createRegistroAula(aula);
   }
 
-  async updateRegistroAulaEmail(email: string, aula: RegistroAula) {
-    return this.aulaRepository.updateRegistroAulaEmail(email, aula);
+  async updateRegistroAulaMateria(materia: string, aula: RegistroAula) {
+    return this.aulaRepository.updateRegistroAulaMateria(materia, aula);
   }
 
-  async getRegistroAulaByEmail(email: string) {
-    return this.aulaRepository.getRegistroAulaByEmail(email);
+  async getRegistroAulaByMateria(materia: string) {
+    return this.aulaRepository.getRegistroAulaByMateria(materia);
   }
 
-  async getRegistroAulaByRedis(email: string) {
-    return this.aulaRepository.getRegistroAulaByRedis(email);
+  async getRegistroAulaByRedis(materia: string) {
+    return this.aulaRepository.getRegistroAulaByRedis(materia);
   }
 }
