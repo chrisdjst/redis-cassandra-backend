@@ -12,12 +12,12 @@ import { CursoModule } from './curso/curso.module';
 import { MatriculaModule } from './matricula/matricula.module';
 import { TurmaModule } from './turma/turma.module';
 import { MateriaModule } from './materia/materia.module';
+import { LecionaModule } from './leciona/leciona.module';
 
 @Module({
   imports: [
     CassandraModule,
     UsuarioModule,
-    RegistroAulaModule,
     AuthModule,
     RedisModule,
     CursoModule,
@@ -25,6 +25,7 @@ import { MateriaModule } from './materia/materia.module';
     TurmaModule,
     RegistroAulaModule,
     MateriaModule,
+    LecionaModule,
   ],
   controllers: [AppController],
   providers: [

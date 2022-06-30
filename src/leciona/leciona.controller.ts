@@ -9,7 +9,7 @@ export class LecionaController {
   constructor(private lecionaService: LecionaService) {}
   //@IsPublic()
   @Get('leciona')
-  async getAulas() {
+  async getLeciona() {
     return this.lecionaService.getLeciona();
   }
 
