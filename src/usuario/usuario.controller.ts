@@ -33,7 +33,7 @@ export class UsuarioController {
   }
 
   @IsPublic()
-  @Get('redis/:email')
+  @Get('redisUsuario/:email')
   async getUserByRedis(@Param('email') email: string) {
     return this.usuarioService.getUserByRedis(email);
   }
