@@ -32,7 +32,7 @@ export class MatriculaController {
   }
 
   @IsPublic()
-  @Get('redis/:num_matricula')
+  @Get('redisMatricula/:num_matricula')
   async getMatriculaByRedis(@Param('num_matricula') num_matricula: number) {
     return this.matriculaService.getMatriculaByRedis(num_matricula);
   }

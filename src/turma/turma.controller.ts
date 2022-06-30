@@ -33,7 +33,7 @@ export class TurmaController {
   }
 
   @IsPublic()
-  @Get('redis/:cod_turma')
+  @Get('redisTurma/:cod_turma')
   async getTurmaByRedis(@Param('cod_turma') cod_turma: string) {
     return this.turmaService.getTurmaByRedis(cod_turma);
   }

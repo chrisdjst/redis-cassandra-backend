@@ -32,7 +32,7 @@ export class RegistroAulaController {
   }
 
   @IsPublic()
-  @Get('redis/:materia')
+  @Get('redisAula/:materia')
   async getRegistroAulaByRedis(@Param('materia') materia: string) {
     return this.aulaService.getRegistroAulaByRedis(materia);
   }

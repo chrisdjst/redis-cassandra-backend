@@ -32,7 +32,7 @@ export class CursoController {
   }
 
   @IsPublic()
-  @Get('redis/:cod_curso')
+  @Get('redisCurso/:cod_curso')
   async getCursoByRedis(@Param('cod_curso') cod_curso: string) {
     return this.cursoService.getCursoByRedis(cod_curso);
   }

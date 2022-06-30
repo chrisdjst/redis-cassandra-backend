@@ -33,7 +33,7 @@ export class MateriaController {
   }
 
   @IsPublic()
-  @Get('redis/:materia')
+  @Get('redisMateria/:materia')
   async getMateriaByRedis(@Param('nome') nome: string) {
     return this.materiaService.getMateriaByRedis(nome);
   }
