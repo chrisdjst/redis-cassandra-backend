@@ -33,11 +33,16 @@ export class CursoRepository implements OnModuleInit {
   }
 
   async createCurso(curso: Curso) {
+    const client = await this.redisService.createRedis();
+    await client.json.arrAppend('curso/' + curso.cod_curso, '$', curso);
     return (await this.cursoMapper.insert(curso)).toArray();
   }
 
   async updateCurso(cod_curso: string, curso: Curso) {
     curso.cod_curso = cod_curso;
+
+    const client = await this.redisService.createRedis();
+    await client.json.arrAppend('curso/' + cod_curso, '$', cod_curso);
 
     return (
       await this.cursoMapper.update(curso, {

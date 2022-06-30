@@ -33,11 +33,16 @@ export class RegistroAulaRepository implements OnModuleInit {
   }
 
   async createRegistroAula(aula: RegistroAula) {
+    const clientRedis = await this.redisService.createRedis();
+    await clientRedis.json.set('aula/' + aula.materia, '$', aula);
     return (await this.aulaMapper.insert(aula)).toArray();
   }
 
   async updateRegistroAulaMateria(materia: string, aula: RegistroAula) {
     aula.materia = materia;
+
+    const client = await this.redisService.createRedis();
+    await client.json.arrAppend('aula/' + materia, '$', materia);
 
     return (
       await this.aulaMapper.update(aula, {
