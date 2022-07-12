@@ -6,8 +6,8 @@ export class UpdateCursoDTO extends Curso {
   nome: string;
 
   @IsInt()
-  carga_horaria: number;
+  ch_curso: number;
 
   @IsString()
-  descricao: string;
+  descricao_curso: string;
 }

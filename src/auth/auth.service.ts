@@ -25,18 +25,16 @@ export class AuthService {
     };
   }
 
-  async validateUser(email: string, password: string): Promise<Usuario[]> {
+  async validateUser(email: string, senha: string): Promise<Usuario> {
     const usuario = await this.usuarioService.getUsuarioByEmail(email);
     if (usuario) {
-      if (password == usuario[0]['senha']) {
+      if (senha == usuario['senha']) {
         return {
           ...usuario,
         };
       }
     }
 
-    throw new UnauthorizedError(
-      'Email address or password provided is incorrect.',
-    );
+    throw new UnauthorizedError('Email ou senha está incorreto.');
   }
 }

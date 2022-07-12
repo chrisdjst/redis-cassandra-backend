@@ -17,7 +17,6 @@ export class TurmaRepository implements OnModuleInit {
       models: {
         Turma: {
           tables: ['turma'],
-          mappings: new mapping.UnderscoreCqlToCamelCaseMappings(),
         },
       },
     };
@@ -34,7 +33,7 @@ export class TurmaRepository implements OnModuleInit {
   async createTurma(turma: Turma) {
     const clientRedis = await this.redisService.createRedis();
     await clientRedis.json.set(turma.cod_turma, '$', turma);
-    return (await this.turmaMapper.insert(turma)).toArray();
+    return await this.turmaMapper.insert(turma);
   }
 
   async updateTurmaCodTurma(cod_turma: string, turma: Turma) {
@@ -43,16 +42,14 @@ export class TurmaRepository implements OnModuleInit {
     const client = await this.redisService.createRedis();
     await client.json.arrAppend('turma/' + cod_turma, '$', cod_turma);
 
-    return (
-      await this.turmaMapper.update(turma, {
-        fields: ['cod_turma', 'dt_inicio', 'dt_fim'],
-        ifExists: true,
-      })
-    ).toArray();
+    return await this.turmaMapper.update(turma, {
+      fields: ['cod_turma', 'dt_inicio', 'dt_fim'],
+      ifExists: true,
+    });
   }
 
   async getTurmaByCodTurma(cod_turma: string) {
-    return (await this.turmaMapper.find({ cod_turma: cod_turma })).toArray();
+    return await this.turmaMapper.get({ cod_turma: cod_turma });
   }
 
   async getTurmaByRedis(cod_turma: string) {

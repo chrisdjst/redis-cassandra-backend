@@ -17,8 +17,7 @@ export class CursoRepository implements OnModuleInit {
     const mappingOptions: mapping.MappingOptions = {
       models: {
         Curso: {
-          tables: ['Curso'],
-          mappings: new mapping.UnderscoreCqlToCamelCaseMappings(),
+          tables: ['curso'],
         },
       },
     };
@@ -33,27 +32,20 @@ export class CursoRepository implements OnModuleInit {
   }
 
   async createCurso(curso: Curso) {
-    const client = await this.redisService.createRedis();
-    await client.json.arrAppend('curso/' + curso.cod_curso, '$', curso);
-    return (await this.cursoMapper.insert(curso)).toArray();
+    return await this.cursoMapper.insert(curso);
   }
 
   async updateCurso(cod_curso: string, curso: Curso) {
     curso.cod_curso = cod_curso;
 
-    const client = await this.redisService.createRedis();
-    await client.json.arrAppend('curso/' + cod_curso, '$', cod_curso);
-
-    return (
-      await this.cursoMapper.update(curso, {
-        fields: ['nome', 'descricao', 'carga_horaria'],
-        ifExists: true,
-      })
-    ).toArray();
+    return await this.cursoMapper.update(curso, {
+      fields: ['nome', 'descricao', 'carga_horaria'],
+      ifExists: true,
+    });
   }
 
   async getCursoByCodCurso(cod_curso: string) {
-    return (await this.cursoMapper.find({ cod_curso: cod_curso })).toArray();
+    return await await this.cursoMapper.get({ cod_curso: cod_curso });
   }
 
   async getCursoByRedis(cod_curso: string) {

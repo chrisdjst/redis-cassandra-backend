@@ -18,7 +18,6 @@ export class LecionaRepository implements OnModuleInit {
       models: {
         Leciona: {
           tables: ['leciona'],
-          mappings: new mapping.UnderscoreCqlToCamelCaseMappings(),
         },
       },
     };
@@ -39,7 +38,7 @@ export class LecionaRepository implements OnModuleInit {
       '$',
       leciona,
     );
-    return (await this.lecionaMapper.insert(leciona)).toArray();
+    return await this.lecionaMapper.insert(leciona);
   }
 
   async updateLeciona(email: string, leciona: Leciona) {
@@ -48,16 +47,14 @@ export class LecionaRepository implements OnModuleInit {
     const client = await this.redisService.createRedis();
     await client.json.arrAppend('leciona/' + email, '$', email);
 
-    return (
-      await this.lecionaMapper.update(leciona, {
-        fields: ['nome', 'descricao', 'carga_horaria'],
-        ifExists: true,
-      })
-    ).toArray();
+    return await this.lecionaMapper.update(leciona, {
+      fields: ['nome', 'descricao', 'carga_horaria'],
+      ifExists: true,
+    });
   }
 
   async getLecionaByEmail(email: string) {
-    return (await this.lecionaMapper.find({ email: email })).toArray();
+    return await this.lecionaMapper.get({ email: email });
   }
 
   async getLecionaByRedis(email: string) {
