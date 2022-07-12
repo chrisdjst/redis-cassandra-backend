@@ -1,6 +1,6 @@
 export class Curso {
   nome: string;
-  carga_horaria: number;
-  descricao: string;
+  ch_curso: number;
+  descricao_curso: string;
   cod_curso: string;
 }

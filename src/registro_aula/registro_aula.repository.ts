@@ -18,7 +18,6 @@ export class RegistroAulaRepository implements OnModuleInit {
       models: {
         RegistroAula: {
           tables: ['registroaula'],
-          mappings: new mapping.UnderscoreCqlToCamelCaseMappings(),
         },
       },
     };
@@ -35,7 +34,7 @@ export class RegistroAulaRepository implements OnModuleInit {
   async createRegistroAula(aula: RegistroAula) {
     const clientRedis = await this.redisService.createRedis();
     await clientRedis.json.set('aula/' + aula.materia, '$', aula);
-    return (await this.aulaMapper.insert(aula)).toArray();
+    return await this.aulaMapper.insert(aula);
   }
 
   async updateRegistroAulaMateria(materia: string, aula: RegistroAula) {
@@ -44,16 +43,14 @@ export class RegistroAulaRepository implements OnModuleInit {
     const client = await this.redisService.createRedis();
     await client.json.arrAppend('aula/' + materia, '$', materia);
 
-    return (
-      await this.aulaMapper.update(aula, {
-        fields: ['materia', 'turma', 'curso'],
-        ifExists: true,
-      })
-    ).toArray();
+    return await this.aulaMapper.update(aula, {
+      fields: ['materia', 'turma', 'curso'],
+      ifExists: true,
+    });
   }
 
   async getRegistroAulaByMateria(materia: string) {
-    return (await this.aulaMapper.find({ materia: materia })).toArray();
+    return await this.aulaMapper.get({ materia: materia });
   }
 
   async getRegistroAulaByRedis(materia: string) {
