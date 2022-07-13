@@ -27,7 +27,7 @@ export class MateriaController {
   }
 
   @IsPublic()
-  @Post('registro')
+  @Post('materias')
   async createMateria(@Body() materia: CreateMateriaDTO) {
     return this.materiaService.createMateria(materia);
   }
