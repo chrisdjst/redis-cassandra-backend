@@ -3,6 +3,7 @@ import { mapping } from 'cassandra-driver';
 import { Leciona } from './entities/leciona.entity';
 import { CassandraService } from 'src/common/cassandra/cassandra.service';
 import { RedisService } from 'src/common/redis/redis.service';
+import { cursorTo } from 'readline';
 
 @Injectable()
 export class LecionaRepository implements OnModuleInit {
@@ -32,25 +33,37 @@ export class LecionaRepository implements OnModuleInit {
   }
 
   async createLeciona(leciona: Leciona) {
+    const objLeciona = {
+      email: leciona.email,
+      tipo_usuario: leciona.tipo_usuario,
+      materias: {
+        0: {
+          dt_inicio: leciona.dt_inicio,
+          dt_fim: leciona.dt_fim,
+          turma: leciona.turma,
+          curso: leciona.curso,
+        },
+      },
+    };
+
     const clientRedis = await this.redisService.createRedis();
-    await clientRedis.json.set(
-      'leciona/' + leciona.email + '/materia ' + leciona.materia,
-      '$',
-      leciona,
-    );
+    await clientRedis.json.set('leciona/' + leciona.email, '$', objLeciona);
     return await this.lecionaMapper.insert(leciona);
   }
 
   async updateLeciona(email: string, leciona: Leciona) {
     leciona.email = email;
 
-    const client = await this.redisService.createRedis();
-    await client.json.arrAppend('leciona/' + email, '$', email);
+    //let materias = await this.getLecionaByRedis(email);
+    //const tamanho = Object.keys(materias.materias).length;
 
-    return await this.lecionaMapper.update(leciona, {
-      fields: ['nome', 'descricao', 'carga_horaria'],
-      ifExists: true,
-    });
+    const client = await this.redisService.createRedis();
+    return await client.json.arrAppend('leciona/' + email, '$', leciona);
+
+    //return await this.lecionaMapper.update(leciona, {
+    //fields: ['nome', 'descricao', 'carga_horaria'],
+    //ifExists: true,
+    //});
   }
 
   async getLecionaByEmail(email: string) {
@@ -59,7 +72,7 @@ export class LecionaRepository implements OnModuleInit {
 
   async getLecionaByRedis(email: string) {
     const clientRedis = await this.redisService.createRedis();
-    const leciona = await clientRedis.json.get(email);
+    const leciona = await clientRedis.json.get('leciona/' + email);
     return leciona;
   }
 }
