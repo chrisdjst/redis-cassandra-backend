@@ -29,41 +29,35 @@ export class LecionaRepository implements OnModuleInit {
   }
 
   async getLeciona() {
-    return (await this.lecionaMapper.findAll()).toArray();
+    //return (await this.lecionaMapper.findAll()).toArray();
+    const clientRedis = await this.redisService.createRedis();
+    const leciona = await clientRedis.ft.search('leciona', '*');
+    return leciona.documents
   }
 
   async createLeciona(leciona: Leciona) {
     const objLeciona = {
       email: leciona.email,
       tipo_usuario: leciona.tipo_usuario,
-      materias: {
-        0: {
+      materias: [
+        {
           dt_inicio: leciona.dt_inicio,
           dt_fim: leciona.dt_fim,
           turma: leciona.turma,
           curso: leciona.curso,
+          materia: leciona.materia
         },
-      },
+      ],
     };
 
     const clientRedis = await this.redisService.createRedis();
     await clientRedis.json.set('leciona/' + leciona.email, '$', objLeciona);
-    return await this.lecionaMapper.insert(leciona);
+    return "Cadastrado com sucesso"
   }
 
   async updateLeciona(email: string, leciona: Leciona) {
-    leciona.email = email;
-
-    //let materias = await this.getLecionaByRedis(email);
-    //const tamanho = Object.keys(materias.materias).length;
-
     const client = await this.redisService.createRedis();
-    return await client.json.arrAppend('leciona/' + email, '$', leciona);
-
-    //return await this.lecionaMapper.update(leciona, {
-    //fields: ['nome', 'descricao', 'carga_horaria'],
-    //ifExists: true,
-    //});
+    return await client.json.arrAppend('leciona/' + email, '.materias', leciona);
   }
 
   async getLecionaByEmail(email: string) {
