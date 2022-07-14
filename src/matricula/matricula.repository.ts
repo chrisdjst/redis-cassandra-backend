@@ -17,7 +17,7 @@ export class MatriculaRepository implements OnModuleInit {
     const mappingOptions: mapping.MappingOptions = {
       models: {
         Matricula: {
-          tables: ['Matricula'],
+          tables: ['matricula'],
           mappings: new mapping.UnderscoreCqlToCamelCaseMappings(),
         },
       },
@@ -29,33 +29,46 @@ export class MatriculaRepository implements OnModuleInit {
   }
 
   async getMatricula() {
-    return (await this.matriculaMapper.findAll()).toArray();
+    const clientRedis = await this.redisService.createRedis();
+    const matricula = await clientRedis.ft.search('matricula', '*');
+    return matricula.documents;
   }
 
   async createMatricula(matricula: Matricula) {
-    return (await this.matriculaMapper.insert(matricula)).toArray();
+    const objMatricula = {
+      email: matricula.email,
+      num_matricula: matricula.num_matricula,
+      dt_ingresso: matricula.dt_ingresso,
+      turma: matricula.turma,
+      curso: matricula.curso,
+    };
+    const clientRedis = await this.redisService.createRedis();
+    await clientRedis.json.set(
+      'matricula/' + matricula.email,
+      '$',
+      objMatricula,
+    );
+    return 'Cadastrado com sucesso';
   }
 
-  async updateMatricula(num_matricula: number, matricula: Matricula) {
-    matricula.num_matricula = num_matricula;
+  async updateMatricula(email: string, matricula: Matricula) {
+    matricula.email = email;
 
     return (
       await this.matriculaMapper.update(matricula, {
-        fields: ['nome', 'descricao', 'carga_horaria'],
+        fields: ['turma'],
         ifExists: true,
       })
     ).toArray();
   }
 
-  async getMatriculaByNumMatricula(num_matricula: number) {
-    return (
-      await this.matriculaMapper.find({ num_matricula: num_matricula })
-    ).toArray();
+  async getMatriculaByEmail(email: string) {
+    return (await this.matriculaMapper.find({ email: email })).toArray();
   }
 
-  async getMatriculaByRedis(num_matricula: number) {
+  async getMatriculaByRedis(email: string) {
     const clientRedis = await this.redisService.createRedis();
-    const matricula = await clientRedis.json.get(num_matricula);
+    const matricula = await clientRedis.json.get(email);
     return matricula;
   }
 }

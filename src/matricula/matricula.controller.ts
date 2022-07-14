@@ -13,17 +13,17 @@ export class MatriculaController {
     return this.matriculaService.getMatricula();
   }
 
-  @Get('matricula/:num_matricula')
-  async getMatriculaByNumMatricula(@Param('num_matricula') num_matricula: number) {
-    return this.matriculaService.getMatriculaByNumMatricula(num_matricula);
+  @Get('matricula/:email')
+  async getMatriculaByEmail(@Param('email') email: string) {
+    return this.matriculaService.getMatriculaByEmail(email);
   }
 
-  @Put('matricula/:num_matricula')
+  @Put('matricula/:email')
   async updateMatriculaByNumMatricula(
-    @Param('num_matricula') num_matricula: number,
+    @Param('num_matricula') email: string,
     @Body() matricula: UpdateMatriculaDTO,
   ) {
-    return this.matriculaService.updateMatricula(num_matricula, matricula);
+    return this.matriculaService.updateMatricula(email, matricula);
   }
 
   @Post('matricula')
@@ -32,8 +32,8 @@ export class MatriculaController {
   }
 
   @IsPublic()
-  @Get('redisMatricula/:num_matricula')
-  async getMatriculaByRedis(@Param('num_matricula') num_matricula: number) {
-    return this.matriculaService.getMatriculaByRedis(num_matricula);
+  @Get('redisMatricula/:email')
+  async getMatriculaByRedis(@Param('email') email: string) {
+    return this.matriculaService.getMatriculaByRedis(email);
   }
 }

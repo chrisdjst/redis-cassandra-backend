@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MatriculaRepository } from './matricula.repository';
 import { Matricula } from './entities/matricula.entity';
-import { CassandraService } from 'src/common/cassandra/cassandra.service';
 
 @Injectable()
 export class MatriculaService {
@@ -15,15 +14,15 @@ export class MatriculaService {
     return this.cursoRepository.createMatricula(matricula);
   }
 
-  async updateMatricula(num_matricula: number, matricula: Matricula) {
-    return this.cursoRepository.updateMatricula(num_matricula, matricula);
+  async updateMatricula(email: string, matricula: Matricula) {
+    return this.cursoRepository.updateMatricula(email, matricula);
   }
 
-  async getMatriculaByNumMatricula(num_matricula: number) {
-    return this.cursoRepository.getMatriculaByNumMatricula(num_matricula);
+  async getMatriculaByEmail(email: string) {
+    return this.cursoRepository.getMatriculaByEmail(email);
   }
 
-  async getMatriculaByRedis(num_matricula: number) {
-    return this.cursoRepository.getMatriculaByRedis(num_matricula);
+  async getMatriculaByRedis(email: string) {
+    return this.cursoRepository.getMatriculaByRedis(email);
   }
 }

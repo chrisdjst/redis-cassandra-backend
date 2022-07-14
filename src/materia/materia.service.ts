@@ -11,7 +11,7 @@ export class MateriaService {
   }
 
   async createMateria(materia: Materia) {
-    return this.materiaRepository.createMateria(materia);
+    return this.materiaRepository.createMaterias(materia);
   }
 
   async updateMateriaName(nome: string, materia: Materia) {
