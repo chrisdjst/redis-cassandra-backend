@@ -3,7 +3,6 @@ import { mapping } from 'cassandra-driver';
 import { Leciona } from './entities/leciona.entity';
 import { CassandraService } from 'src/common/cassandra/cassandra.service';
 import { RedisService } from 'src/common/redis/redis.service';
-import { cursorTo } from 'readline';
 
 @Injectable()
 export class LecionaRepository implements OnModuleInit {
@@ -29,10 +28,9 @@ export class LecionaRepository implements OnModuleInit {
   }
 
   async getLeciona() {
-    //return (await this.lecionaMapper.findAll()).toArray();
     const clientRedis = await this.redisService.createRedis();
     const leciona = await clientRedis.ft.search('leciona', '*');
-    return leciona.documents
+    return leciona.documents;
   }
 
   async createLeciona(leciona: Leciona) {
@@ -45,19 +43,23 @@ export class LecionaRepository implements OnModuleInit {
           dt_fim: leciona.dt_fim,
           turma: leciona.turma,
           curso: leciona.curso,
-          materia: leciona.materia
+          materia: leciona.materia,
         },
       ],
     };
 
     const clientRedis = await this.redisService.createRedis();
     await clientRedis.json.set('leciona/' + leciona.email, '$', objLeciona);
-    return "Cadastrado com sucesso"
+    return 'Cadastrado com sucesso';
   }
 
   async updateLeciona(email: string, leciona: Leciona) {
     const client = await this.redisService.createRedis();
-    return await client.json.arrAppend('leciona/' + email, '.materias', leciona);
+    return await client.json.arrAppend(
+      'leciona/' + email,
+      '.materias',
+      leciona,
+    );
   }
 
   async getLecionaByEmail(email: string) {

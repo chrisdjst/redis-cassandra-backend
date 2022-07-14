@@ -6,18 +6,14 @@ export class CreateMatriculaDTO extends Matricula {
   num_matricula: number;
 
   @IsEmail()
-  email_aluno: string;
+  email: string;
 
   @IsString()
-  cod_curso: string;
-
-  @IsString()
-  materia: string;
+  curso: string;
 
   @IsString()
   turma: string;
 
   @IsString()
   dt_ingresso: string;
-  
 }

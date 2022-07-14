@@ -27,20 +27,27 @@ export class MateriaRepository implements OnModuleInit {
   }
 
   async getMaterias() {
-    return (await this.materiaMapper.findAll()).toArray();
+    const clientRedis = await this.redisService.createRedis();
+    const materias = await clientRedis.ft.search('materias', '*');
+    return materias.documents;
   }
 
-  async createMateria(materia: Materia) {
+  async createMaterias(materias: Materia) {
+    const objMaterias = {
+      nome: materias.nome,
+      ch_materia: materias.ch_materia,
+    };
+
     const clientRedis = await this.redisService.createRedis();
-    await clientRedis.json.set(materia.nome, '$', materia);
-    return await this.materiaMapper.insert(materia);
+    await clientRedis.json.set('materia/' + materias.nome, '$', objMaterias);
+    return 'Cadastrado com sucesso';
   }
 
   async updateMateriaName(nome: string, materia: Materia) {
     materia.nome = nome;
 
     return await this.materiaMapper.update(materia, {
-      fields: ['nome', 'nome', 'senha'],
+      fields: ['ch_materia'],
       ifExists: true,
     });
   }
@@ -51,7 +58,7 @@ export class MateriaRepository implements OnModuleInit {
 
   async getMateriaByRedis(nome: string) {
     const clientRedis = await this.redisService.createRedis();
-    const materia = await clientRedis.json.get(nome);
+    const materia = await clientRedis.json.get('materia/' + nome);
     return materia;
   }
 }
