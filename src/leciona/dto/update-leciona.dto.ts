@@ -1,8 +1,7 @@
 import { Leciona } from '../entities/leciona.entity';
-import { IsEmail, IsInt, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class UpdateLecionaDTO extends Leciona {
-
   @IsString()
   dt_inicio: string;
 

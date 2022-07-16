@@ -20,7 +20,7 @@ export class MatriculaController {
 
   @Put('matricula/:email')
   async updateMatriculaByNumMatricula(
-    @Param('num_matricula') email: string,
+    @Param('email') email: string,
     @Body() matricula: UpdateMatriculaDTO,
   ) {
     return this.matriculaService.updateMatricula(email, matricula);
