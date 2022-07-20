@@ -10,7 +10,6 @@ import { RedisModule } from './common/redis/redis.module';
 import { RegistroAulaModule } from './registro_aula/registro_aula.module';
 import { CursoModule } from './curso/curso.module';
 import { MatriculaModule } from './matricula/matricula.module';
-import { TurmaModule } from './turma/turma.module';
 import { MateriaModule } from './materia/materia.module';
 import { LecionaModule } from './leciona/leciona.module';
 
@@ -22,7 +21,6 @@ import { LecionaModule } from './leciona/leciona.module';
     RedisModule,
     CursoModule,
     MatriculaModule,
-    TurmaModule,
     RegistroAulaModule,
     MateriaModule,
     LecionaModule,

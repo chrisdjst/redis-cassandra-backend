@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsuarioRepository } from './usuario.repository';
 import { Usuario } from './entities/usuario.entity';
-import { CassandraService } from 'src/common/cassandra/cassandra.service';
 
 @Injectable()
 export class UsuarioService {
@@ -21,9 +20,5 @@ export class UsuarioService {
 
   async getUsuarioByEmail(email: string) {
     return this.usuarioRepository.getUsuarioByEmail(email);
-  }
-
-  async getUserByRedis(email: string) {
-    return this.usuarioRepository.getUserByRedis(email);
   }
 }
