@@ -30,6 +30,7 @@ export class LecionaRepository implements OnModuleInit {
   async getLeciona() {
     const clientRedis = await this.redisService.createRedis();
     const leciona = await clientRedis.ft.search('leciona', '*');
+    await clientRedis.quit()
     return leciona.documents;
   }
 
@@ -50,25 +51,30 @@ export class LecionaRepository implements OnModuleInit {
 
     const clientRedis = await this.redisService.createRedis();
     await clientRedis.json.set('leciona/' + leciona.email, '$', objLeciona);
+    await clientRedis.quit()
     return 'Cadastrado com sucesso';
   }
 
   async updateLeciona(email: string, leciona: Leciona) {
     const client = await this.redisService.createRedis();
-    return await client.json.arrAppend(
+
+    let lecionaUpdate = await client.json.arrAppend(
       'leciona/' + email,
       '.materias',
       leciona,
     );
+    await client.quit()
+    return lecionaUpdate
   }
 
-  async getLecionaByEmail(email: string) {
+  async getLecionaByEmail(email: string) {    
     return await this.lecionaMapper.get({ email: email });
   }
 
   async getLecionaByRedis(email: string) {
     const clientRedis = await this.redisService.createRedis();
     const leciona = await clientRedis.json.get('leciona/' + email);
+    await clientRedis.quit()
     return leciona;
   }
 }

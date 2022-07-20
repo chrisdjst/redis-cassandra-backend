@@ -31,6 +31,7 @@ export class MatriculaRepository implements OnModuleInit {
   async getMatricula() {
     const clientRedis = await this.redisService.createRedis();
     const matricula = await clientRedis.ft.search('matricula', '*');
+    await clientRedis.quit()
     return matricula.documents;
   }
 
@@ -54,16 +55,20 @@ export class MatriculaRepository implements OnModuleInit {
       '$',
       objMatricula,
     );
+    await clientRedis.quit()
     return 'Cadastrado com sucesso';
   }
 
   async updateMatricula(email: string, matricula: Matricula) {
     const client = await this.redisService.createRedis();
-    return await client.json.arrAppend(
+    let matriculaUpdate = await client.json.arrAppend(
       'matricula/' + email,
       '.disciplinas',
       matricula,
     );
+
+    await client.quit()
+    return matriculaUpdate
   }
   async getMatriculaByEmail(email: string) {
     return (await this.matriculaMapper.find({ email: email })).toArray();
@@ -72,6 +77,7 @@ export class MatriculaRepository implements OnModuleInit {
   async getMatriculaByRedis(email: string) {
     const clientRedis = await this.redisService.createRedis();
     const matricula = await clientRedis.json.get('matricula/' + email);
+    await clientRedis.quit()
     return matricula;
   }
 }
