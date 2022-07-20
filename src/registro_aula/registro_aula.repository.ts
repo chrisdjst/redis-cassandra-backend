@@ -2,14 +2,10 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { mapping } from 'cassandra-driver';
 import { RegistroAula } from './entities/registro_aula.entity';
 import { CassandraService } from 'src/common/cassandra/cassandra.service';
-import { RedisService } from 'src/common/redis/redis.service';
 
 @Injectable()
 export class RegistroAulaRepository implements OnModuleInit {
-  constructor(
-    private cassandraService: CassandraService,
-    private redisService: RedisService,
-  ) {}
+  constructor(private cassandraService: CassandraService) {}
 
   aulaMapper: mapping.ModelMapper<RegistroAula>;
 

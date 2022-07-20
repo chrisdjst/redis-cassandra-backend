@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
 import { CursoService } from './curso.service';
 import { CreateCursoDTO } from './dto/create-curso.dto';
 import { UpdateCursoDTO } from './dto/update-curso.dto';
-import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 
 @Controller()
 export class CursoController {
@@ -29,11 +28,5 @@ export class CursoController {
   @Post('curso')
   async createUsuario(@Body() curso: CreateCursoDTO) {
     return this.cursoService.createCurso(curso);
-  }
-
-  @IsPublic()
-  @Get('redisCurso/:cod_curso')
-  async getCursoByRedis(@Param('cod_curso') cod_curso: string) {
-    return this.cursoService.getCursoByRedis(cod_curso);
   }
 }

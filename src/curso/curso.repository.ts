@@ -2,14 +2,10 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { mapping } from 'cassandra-driver';
 import { Curso } from './entities/curso.entity';
 import { CassandraService } from 'src/common/cassandra/cassandra.service';
-import { RedisService } from 'src/common/redis/redis.service';
 
 @Injectable()
 export class CursoRepository implements OnModuleInit {
-  constructor(
-    private cassandraService: CassandraService,
-    private redisService: RedisService,
-  ) {}
+  constructor(private cassandraService: CassandraService) {}
 
   cursoMapper: mapping.ModelMapper<Curso>;
 
@@ -46,11 +42,5 @@ export class CursoRepository implements OnModuleInit {
 
   async getCursoByCodCurso(cod_curso: string) {
     return await await this.cursoMapper.get({ cod_curso: cod_curso });
-  }
-
-  async getCursoByRedis(cod_curso: string) {
-    const clientRedis = await this.redisService.createRedis();
-    const curso = await clientRedis.json.get(cod_curso);
-    return curso;
   }
 }

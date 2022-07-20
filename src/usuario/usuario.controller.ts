@@ -31,10 +31,4 @@ export class UsuarioController {
   async createUsuario(@Body() usuario: CreateUsuarioDTO) {
     return this.usuarioService.createUsuario(usuario);
   }
-
-  @IsPublic()
-  @Get('redisUsuario/:email')
-  async getUserByRedis(@Param('email') email: string) {
-    return this.usuarioService.getUserByRedis(email);
-  }
 }
