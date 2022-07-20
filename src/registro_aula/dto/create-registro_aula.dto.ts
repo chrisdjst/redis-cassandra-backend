@@ -18,7 +18,7 @@ export class CreateRegistroAulaDTO extends RegistroAula {
   turma: string;
 
   @IsString()
-  dt_aula: Date;
+  dt_aula: string;
 
   @IsString()
   descricao_aula: string;

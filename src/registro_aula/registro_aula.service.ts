@@ -14,15 +14,21 @@ export class RegistroAulaService {
     return this.aulaRepository.createRegistroAula(aula);
   }
 
-  async updateRegistroAulaMateria(materia: string, aula: RegistroAula) {
-    return this.aulaRepository.updateRegistroAulaMateria(materia, aula);
+  async updateRegistroAulaMateria(
+    materia: string,
+    curso: string,
+    dt_aula: string,
+    aula: RegistroAula,
+  ) {
+    return this.aulaRepository.updateRegistroAulaMateria(
+      materia,
+      curso,
+      dt_aula,
+      aula,
+    );
   }
 
   async getRegistroAulaByMateria(materia: string) {
     return this.aulaRepository.getRegistroAulaByMateria(materia);
-  }
-
-  async getRegistroAulaByRedis(materia: string) {
-    return this.aulaRepository.getRegistroAulaByRedis(materia);
   }
 }

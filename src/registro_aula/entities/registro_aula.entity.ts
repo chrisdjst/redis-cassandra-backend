@@ -4,6 +4,6 @@ export class RegistroAula {
   curso: string;
   materia: string;
   turma: string;
-  dt_aula: Date;
+  dt_aula: string;
   descricao_aula: string;
 }

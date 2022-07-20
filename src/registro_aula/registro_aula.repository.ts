@@ -35,12 +35,19 @@ export class RegistroAulaRepository implements OnModuleInit {
     return (await this.aulaMapper.insert(aula)).toArray();
   }
 
-  async updateRegistroAulaMateria(materia: string, aula: RegistroAula) {
+  async updateRegistroAulaMateria(
+    materia: string,
+    curso: string,
+    dt_aula: string,
+    aula: RegistroAula,
+  ) {
     aula.materia = materia;
+    aula.curso = curso;
+    aula.dt_aula = dt_aula;
 
     return (
       await this.aulaMapper.update(aula, {
-        fields: ['materia', 'turma', 'curso'],
+        fields: ['materia', 'curso', 'dt_aula', 'turma', 'descricao_aula'],
         ifExists: true,
       })
     ).toArray();
@@ -48,11 +55,5 @@ export class RegistroAulaRepository implements OnModuleInit {
 
   async getRegistroAulaByMateria(materia: string) {
     return (await this.aulaMapper.find({ materia: materia })).toArray();
-  }
-
-  async getRegistroAulaByRedis(materia: string) {
-    const clientRedis = await this.redisService.createRedis();
-    const usuario = await clientRedis.json.get(materia);
-    return usuario;
   }
 }
