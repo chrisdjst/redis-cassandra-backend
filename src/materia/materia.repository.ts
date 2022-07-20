@@ -29,6 +29,7 @@ export class MateriaRepository implements OnModuleInit {
   async getMaterias() {
     const clientRedis = await this.redisService.createRedis();
     const materias = await clientRedis.ft.search('materias', '*');
+    await clientRedis.quit()
     return materias.documents;
   }
 
@@ -40,6 +41,7 @@ export class MateriaRepository implements OnModuleInit {
 
     const clientRedis = await this.redisService.createRedis();
     await clientRedis.json.set('materia/' + materias.nome, '$', objMaterias);
+    await clientRedis.quit()
     return 'Cadastrado com sucesso';
   }
 
@@ -59,6 +61,7 @@ export class MateriaRepository implements OnModuleInit {
   async getMateriaByRedis(nome: string) {
     const clientRedis = await this.redisService.createRedis();
     const materia = await clientRedis.json.get('materia/' + nome);
+    await clientRedis.quit()
     return materia;
   }
 }
