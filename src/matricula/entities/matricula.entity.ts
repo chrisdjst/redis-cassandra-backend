@@ -4,4 +4,5 @@ export class Matricula {
   curso: string;
   turma: string;
   dt_ingresso: string;
+  disciplina: string;
 }
