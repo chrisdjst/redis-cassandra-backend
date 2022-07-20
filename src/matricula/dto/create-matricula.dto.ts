@@ -16,4 +16,7 @@ export class CreateMatriculaDTO extends Matricula {
 
   @IsString()
   dt_ingresso: string;
+
+  @IsString()
+  disciplina: string;
 }
