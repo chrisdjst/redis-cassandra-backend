@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
 import { RegistroAulaService } from './registro_aula.service';
 import { CreateRegistroAulaDTO } from './dto/create-registro_aula.dto';
 import { UpdateRegistroAulaDTO } from './dto/update-registro_aula.dto';
-import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 
 @Controller()
 export class RegistroAulaController {
@@ -18,22 +17,23 @@ export class RegistroAulaController {
     return this.aulaService.getRegistroAulaByMateria(materia);
   }
 
-  @Put('aulas/:materia')
+  @Put('aulas/:materia/:curso/:dt_aula')
   async updateRegistroAulaByMateria(
     @Param('materia') materia: string,
+    @Param('curso') curso: string,
+    @Param('dt_aula') dt_aula: string,
     @Body() aula: UpdateRegistroAulaDTO,
   ) {
-    return this.aulaService.updateRegistroAulaMateria(materia, aula);
+    return this.aulaService.updateRegistroAulaMateria(
+      materia,
+      curso,
+      dt_aula,
+      aula,
+    );
   }
 
   @Post('aulas')
   async createUsuario(@Body() aula: CreateRegistroAulaDTO) {
     return this.aulaService.createRegistroAula(aula);
-  }
-
-  @IsPublic()
-  @Get('redisAula/:materia')
-  async getRegistroAulaByRedis(@Param('materia') materia: string) {
-    return this.aulaService.getRegistroAulaByRedis(materia);
   }
 }
