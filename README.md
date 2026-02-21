@@ -1,73 +1,87 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# redis-cassandra-backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST construída com **NestJS** e **TypeScript** para gerenciamento acadêmico, utilizando **Apache Cassandra** como banco de dados principal e **Redis** para caching. Projeto desenvolvido em equipe como trabalho acadêmico, com CI/CD e deploy em produção.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Sobre o projeto
 
-## Description
+Sistema de gestão acadêmica com autenticação JWT, cobrindo as entidades de cursos, matérias, usuários, matrículas, professores e registros de aula. O backend foi projetado para explorar bancos de dados distribuídos em um contexto real de aplicação.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Funcionalidades
 
-## Installation
+- Autenticação com JWT + Passport (estratégias local e JWT)
+- CRUD completo de **Cursos**, **Matérias**, **Usuários**, **Matrículas** e **Registro de Aulas**
+- Módulo `Leciona` para relacionamento entre professores e matérias
+- Validação global de requests com `class-validator` e `class-transformer`
+- Caching com **Redis** (RedisLabs Cloud)
+- Persistência com **Apache Cassandra** (Datastax Astra DB)
+- Guard JWT global — todas as rotas são protegidas por padrão
 
-```bash
-$ npm install
+## Stack
+
+- [NestJS 8](https://nestjs.com/) + TypeScript
+- [Apache Cassandra](https://cassandra.apache.org/) via Datastax Astra DB (`cassandra-driver`)
+- [Redis](https://redis.io/) via RedisLabs Cloud (`ioredis`, `redis-om`)
+- JWT + Passport (`@nestjs/jwt`, `passport-jwt`, `passport-local`)
+- [CircleCI](https://circleci.com/) para CI/CD
+- Deploy no [Heroku](https://heroku.com/)
+
+## Estrutura de módulos
+
+```
+src/
+├── auth/           # Autenticação JWT + Passport
+├── common/
+│   ├── cassandra/  # Módulo de conexão com Cassandra
+│   └── redis/      # Módulo de conexão com Redis
+├── usuario/        # Gestão de usuários
+├── curso/          # Gestão de cursos
+├── materia/        # Gestão de matérias
+├── matricula/      # Matrículas de alunos em cursos
+├── leciona/        # Relacionamento professor ↔ matéria
+└── registro_aula/  # Registro de presença em aulas
 ```
 
-## Running the app
+## Como rodar localmente
+
+### Pré-requisitos
+
+- Node.js 16+
+- Conta no [Datastax Astra DB](https://astra.datastax.com/) (Cassandra gerenciado)
+- Conta no [RedisLabs](https://redis.com/) (Redis gerenciado)
+
+### Instalação
 
 ```bash
-# development
-$ npm run start
+# Instalar dependências
+npm install
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Configurar variáveis de ambiente
+cp .env.example .env
+# Preencha JWT_SECRET e as credenciais do Cassandra/Redis no .env
 ```
 
-## Test
+### Executando
 
 ```bash
-# unit tests
-$ npm run test
+# Desenvolvimento (hot reload)
+npm run start:dev
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Produção
+npm run start:prod
 ```
 
-## Support
+### Testes
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+npm run test        # Testes unitários
+npm run test:e2e    # Testes end-to-end
+npm run test:cov    # Cobertura de testes
+```
 
-## Stay in touch
+## Projeto relacionado
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**[redis-cassandra-frontend](https://github.com/chrisdjst/redis-cassandra-frontend)** — Interface Vue.js + Vuetify que consome esta API.
 
-## License
+## Contribuidores
 
-Nest is [MIT licensed](LICENSE).
+Desenvolvido em equipe como projeto acadêmico.
